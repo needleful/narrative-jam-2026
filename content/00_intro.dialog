@@ -1,0 +1,53 @@
+// WAX GLOVES
+* In 1834, the first angel was discovered.
+* They found it in a cave in the Russian countryside.
+* Like the others, it had no name.
+* Like the others, it made an offer.
+angel -- Enter my pact, and I shall give you my power.
+* Two thousand five hundred years have passed. The world is different.
+* The angel is gone. In its place lies immense caverns, unnaturally dark.
+* They say there's a city in the blackness. They say there are treasures and secret knowledge.
+* They say the angel is still there, deep in the caves.
+* Many are going, for many reasons. You are one of them.
+[scene: cave]
+* You and your guide tread down what might have been a stairway, centuries ago.
+* The torches, aided by magic, drip warm Wax across your fingers.
+myra -- Art thou [explore: affrighted]? Thine idle legs shall make the journey slow.
+> The torches are going dim.
+	myra -- As is their course. The caverns layer darkness upon itself, folding it like a veil.
+		Soon they shall scarcely light our feet.
+	> We won't make /any/ progress if they go out.
+> The path is narrow.
+	myra -- Better shoes would do thee good.
+	> My shoes are fine. We just need to tread carefully.
+	> They're a bit worn, but 
+> There could be others ahead.
+	myra -- Aye. There shall be.
+[forget: affrighted]
+[exit]
+
+:myra_face
+* Myra the chant-singer.
+* Her face is more animal than human, changed by magic.
+> [skip] (It's disgusting.)
+	* She and her cohorts live and die by ancient traditions and artifacts, but the human form seems not among those precious things.
+	* They're free to contort and ruin themselves for shallow utility and aesthetic, leaving their own species behind.
+	* Hypocrites. The ugliness of their meddling is the burden they deserve.
+> [skip] (It's beautiful.)
+	* She's sculpted herself into what she wants to be. Isn't that what we all want?
+[back]
+
+:affrighted
+you -- “Affrighted?”
+myra -- Thou dost refute the charge?
+> I'm just confused by your phrasing. It's hard to understand what you're saying, at times.
+	myra -- I understand. We learned from the echos of [explore: the ancient songs | ancient_songs]. Those deaf to it are force to relearn, again and again, and lose yet more of their memory.
+> I do.
+	myra -- Then perhaps thou shouldst walk faster.
+[back]
+
+:ancient_songs
+> What are the ancient chants? Who sang them?
+	myra -- 
+> How do you hear these songs?
+[back]
