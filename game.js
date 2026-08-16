@@ -1,10 +1,21 @@
-import * as Dialog from './dialog/compiler.js';
-import * as DialogView from './dialog/display.js';
+import * as Dialog from '/dialog/compiler.js';
+import * as DialogView from '/dialog/display.js';
 
 const name = 'wax_gloves';
 const content = document.getElementById('game-content');
 
-async function test(strPath) {
+const codePreamble = `
+import * as Dialog from '/dialog/compiler.js';
+import * as DialogView from '/dialog/display.js';
+
+const datxt = DialogView.appendText;
+const dach = DialogView.addChild;
+
+const always = (ctx) => true;
+
+`;
+
+async function compile(strPath, out) {
 	DialogView.addChild(content, strPath, 'h2');
 	const response = await fetch(strPath, {cache: 'no-store'});
 	if(!response.ok) {
@@ -13,10 +24,19 @@ async function test(strPath) {
 	}
 	var strText = await response.text();
 	var seqDialog = Dialog.compile(strText.replaceAll('\r', ''));
-	DialogView.displayDebug(content, seqDialog);
+	var elemJS = document.createElement('pre');
+	elemJS.innerText = codePreamble + Dialog.toJS(seqDialog, 'const '+ out);
+	content.appendChild(elemJS);
 }
 
-test('./content/00_intro.dialog');
+function buildGame() {
+	compile('/build/00_intro.dialog', 'dialog00_intro');
+}
+
+var btnCompile = document.getElementById('btn-compile');
+if(btnCompile) {
+	btnCompile.addEventListener('click', buildGame);	
+} 
 
 export {name};
 
