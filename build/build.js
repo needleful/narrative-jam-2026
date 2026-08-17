@@ -5,8 +5,6 @@ const name = 'wax_gloves_build';
 const content = document.getElementById('game-content');
 const download = document.getElementById('link-download');
 
-const codePreamble = '//AUTOMATICALLY GENERATED\n';
-
 async function compile(strPath, out) {
 	DialogView.addChild(content, strPath, 'h2');
 	const response = await fetch(strPath, {cache: 'no-store'});
@@ -17,14 +15,14 @@ async function compile(strPath, out) {
 	var strText = await response.text();
 	var seqDialog = Dialog.compile(strText.replaceAll('\r', ''));
 	var elemJS = document.createElement('pre');
-	var strCode = codePreamble + `export const name = "${out}";\n` + Dialog.toJS(seqDialog, 'export const '+ out)
-	elemJS.innerText = strCode;
-	content.appendChild(elemJS);
+	var codePreamble = `//AUTOMATICALLY GENERATED
+	export const name = "${out}";\n export const ${out} = `;
+	var strCode = codePreamble + Dialog.toJS(seqDialog);
 	return strCode;
 }
 
-async function buildGame() {
-	var strCode = await compile('/build/00_intro.dialog', 'dialog00_intro');
+async function compileAndSave(pathIn, strOut) {
+	var strCode = await compile(pathIn, strOut);
 	var blobCode = new Blob([strCode], {type: 'text/plain'});
 	if(window.navigator.msSaveOrOpenBlob) {
 		window.navigator.msSaveBlob(blob, filename);
@@ -32,11 +30,15 @@ async function buildGame() {
 	else {
 		const elem = window.document.createElement('a');
 		elem.href = URL.createObjectURL(blobCode);
-		elem.download = '00_intro.js';
+		elem.download = strOut + '.js';
 		document.body.appendChild(elem);
 		elem.click();
 		document.body.removeChild(elem);
 	}
+}
+
+async function buildGame() {
+	await compileAndSave('/build/00_intro.dialog', 'dialog00_intro');
 }
 
 var btnCompile = document.getElementById('btn-compile');

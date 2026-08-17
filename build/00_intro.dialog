@@ -14,7 +14,7 @@ angel -- Enter my pact, and I shall give you my power.
 * ...
 [scene: cave]
 myra -- Art thou [explore: affrighted]? Thine idle legs shall make the journey slow.
-* She's [explore: staring at you. | myra_face]. The torch drips Wax across your fingers.
+* She's [explore: staring at you| myra_face]. The torch drips Wax across your fingers.
 > The torches are going dim.
 	myra -- As is their course. The caverns layer darkness upon itself, folding it like a veil.
 		Soon they shall scarcely light our feet.

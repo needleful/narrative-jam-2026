@@ -1,7 +1,7 @@
 const name = 'wax_gloves';
 
 import * as DialogView from '/dialog/display.js';
-import {dialog00_intro} from '/compiled/00_intro.js';
+import {dialog00_intro} from '/compiled/dialog00_intro.js';
 
 var btnPlay = document.getElementById('btn-play');
 var btnNext = document.getElementById('btn-next');
@@ -25,14 +25,14 @@ function diaGet(intId) {
 	return seqCurrent.dc_int_dialog[intId];
 }
 
-var stack = [];
-// A list of HTML elements for each topic
-var context = {};
+var a_stack = [];
+// Dictionary to a list of HTML elements for each topic
+var dc_mentioned = {};
 var intCurrent = 0;
 function reset() {
 	intCurrent = 0;
-	stack = [];
-	context = {};
+	a_stack = [];
+	dc_mentioned = {};
 }
 
 var ctx = {
@@ -40,8 +40,8 @@ var ctx = {
 		return {goto: -1};
 	},
 	forget: (topic) => {
-		if(topic in context) {
-			var a_elemLinks = context[topic];
+		if(topic in dc_mentioned) {
+			var a_elemLinks = dc_mentioned[topic];
 			for(var i = 0; i < a_elemLinks.length; i++) {
 				var elemLink = a_elemLinks[i];
 				elemLink.classList.add('disabled');
@@ -65,11 +65,11 @@ var ctx = {
 		}
 	},
 	enter: (strLabel) => {
-		stack.push(intCurrent);
+		a_stack.push(intCurrent);
 		return ctx.goto(strLabel);
 	},
 	back: () => {
-		var intPrev = stack.pop();
+		var intPrev = a_stack.pop();
 		var intNext = diaGet(intPrev).nextOnEnter;
 		return {goto: intNext};
 	},
@@ -98,11 +98,11 @@ var ctx = {
 		return link;
 	},
 	mention: (strTopic) => {
-		context[strTopic] = [];
+		dc_mentioned[strTopic] = [];
 		return true;
 	},
 	mentioned: (strTopic) => {
-		return strTopic in context;
+		return strTopic in dc_mentioned;
 	}
 };
 
@@ -203,6 +203,7 @@ function advance() {
 
 function start(seqDialog) {
 	seqCurrent = seqDialog;
+	intCurrent = seqCurrent.intStart;
 	reset();
 	advance();
 	btnPlay.hidden = true;

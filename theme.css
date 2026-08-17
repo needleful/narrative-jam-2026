@@ -21,6 +21,7 @@ h1 {
 }
 #messages {
 	padding-bottom: 20pt;
+	height:100%;
 }
 
 .button {
