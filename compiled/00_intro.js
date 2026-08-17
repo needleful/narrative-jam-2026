@@ -4,9 +4,9 @@ export const dialog00_intro
  = {
 dc_str_labels: {
 	"entry": 0,
-	"myra_face": 26,
-	"affrighted": 35,
-	"ancient_songs": 42,
+	"myra_face": 36,
+	"affrighted": 47,
+	"ancient_songs": 54,
 },
 dc_int_dialog: {
 0: {
@@ -49,57 +49,79 @@ dc_int_dialog: {
 	nextOnEnter: 6, nextOnSkip:6,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " Two thousand five hundred years have passed. The world is different.");
+		display.appendText(e, " ...");
 		},
 },
 6: {
 	nextOnEnter: 7, nextOnSkip:7,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " The angel is gone. In its place lies immense caverns, unnaturally dark.");
+		display.appendText(e, " Two thousand five hundred years have passed. The world is different.");
 		},
 },
 7: {
 	nextOnEnter: 8, nextOnSkip:8,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " They say there's a city in the blackness. They say there are treasures and secret knowledge.");
+		display.appendText(e, " The angel is gone. In its place lies immense caverns, unnaturally dark.");
 		},
 },
 8: {
 	nextOnEnter: 9, nextOnSkip:9,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " They say the angel is still there, deep in the caves.");
+		display.appendText(e, " They say there's a city in the blackness. They say there are treasures and secret knowledge.");
 		},
 },
 9: {
 	nextOnEnter: 10, nextOnSkip:10,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " Many are going, for many reasons. You are one of them.");
+		display.appendText(e, " They say the angel is still there, deep in the caves.");
 		},
 },
 10: {
 	nextOnEnter: 11, nextOnSkip:11,
-	canEnter: (ctx) => (ctx.scene("cave")),
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " Many are going, for many reasons. You are one of them.");
+		},
 },
 11: {
 	nextOnEnter: 12, nextOnSkip:12,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " You and your guide tread down what might have been a stairway, centuries ago.");
+		display.appendText(e, " ...");
 		},
 },
 12: {
 	nextOnEnter: 13, nextOnSkip:13,
+	canEnter: (ctx) => (ctx.scene("cave")),
+},
+13: {
+	nextOnEnter: 14, nextOnSkip:14,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " You and your guide tread down what might have once been a stairway.");
+		},
+},
+14: {
+	nextOnEnter: 15, nextOnSkip:15,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
 		display.appendText(e, " The torches, aided by magic, drip warm Wax across your fingers.");
 		},
 },
-13: {
-	nextOnEnter: 14, nextOnSkip:14,
+15: {
+	nextOnEnter: 16, nextOnSkip:16,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " She's ");
+		display.appendTextOrElement(e, ctx.explore("staring at you. ", "myra_face"));
+		},
+},
+16: {
+	nextOnEnter: 17, nextOnSkip:17,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-myra");
@@ -108,48 +130,21 @@ dc_int_dialog: {
 		display.appendText(e, "? Thine idle legs shall make the journey slow.");
 		},
 },
-14: {
-	nextOnEnter: 15, nextOnSkip:24,
+17: {
+	nextOnEnter: 18, nextOnSkip:29,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
+		var e = display.addReplyButton();var btn = e;
 		display.appendText(e, " The torches are going dim.");
+		return btn;
 		},
-	getOptions: () => [14, 18, 22],
+	getOptions: () => [17, 23, 27],
 },
-15: {
-	nextOnEnter: 16, nextOnSkip:17,
+18: {
+	nextOnEnter: 19, nextOnSkip:20,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-myra");
 		display.appendText(e, " As is their course. The caverns layer darkness upon itself, folding it like a veil.");
-		},
-},
-16: {
-	nextOnEnter: 17, nextOnSkip:17,
-	show: (ctx, display) => { //;
-		var e = display.addMessage(); e.classList.add('dia-message');
-		e.classList.add("speaker-myra");
-		display.appendText(e, "Soon they shall scarcely light our feet.");
-		},
-},
-17: {
-	nextOnEnter: 24, nextOnSkip:24,
-	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
-		display.appendText(e, " We won't make ");
-		var _we = document.createElement('i');
-		e.appendChild(_we); e = _we;
-		display.appendText(e, "any");
-		e = e.parentElement;
-		display.appendText(e, " progress if they go out.");
-		},
-	getOptions: () => [17],
-},
-18: {
-	nextOnEnter: 19, nextOnSkip:24,
-	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
-		display.appendText(e, " The path is narrow.");
 		},
 },
 19: {
@@ -157,136 +152,244 @@ dc_int_dialog: {
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-myra");
-		display.appendText(e, " Better shoes would do thee good.");
+		display.appendText(e, "Soon they shall scarcely light our feet.");
 		},
 },
 20: {
-	nextOnEnter: -1, nextOnSkip:-1,
+	nextOnEnter: 22, nextOnSkip:22,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
-		display.appendText(e, " My shoes are fine. We just need to tread carefully.");
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, " We won't make ");
+		var _we = document.createElement('i');
+		e.appendChild(_we); e = _we;
+		display.appendText(e, "any");
+		e = e.parentElement;
+		display.appendText(e, " progress if they go out.");
+		return btn;
 		},
 	getOptions: () => [20, 21],
 },
 21: {
-	nextOnEnter: 24, nextOnSkip:24,
+	nextOnEnter: 22, nextOnSkip:22,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
-		display.appendText(e, " They're a bit worn, but ");
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, " What do we do then?");
+		return btn;
 		},
 },
 22: {
-	nextOnEnter: 23, nextOnSkip:24,
+	nextOnEnter: 29, nextOnSkip:29,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
-		display.appendText(e, " There could be others ahead.");
+		var e = display.addMessage(); e.classList.add('dia-message');
+		e.classList.add("speaker-"+ctx.defaultSpeaker);
+		display.appendText(e, "Worry not, I can hear the ");
+		display.appendTextOrElement(e, ctx.explore("ancient songs ", "ancient_songs"));
+		display.appendText(e, ". They shall guide us.");
 		},
 },
 23: {
-	nextOnEnter: 24, nextOnSkip:24,
+	nextOnEnter: 24, nextOnSkip:29,
+	show: (ctx, display) => { //;
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, " The path is narrow.");
+		return btn;
+		},
+},
+24: {
+	nextOnEnter: 25, nextOnSkip:25,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-message');
+		e.classList.add("speaker-myra");
+		display.appendText(e, " Better shoes would do thee good.");
+		},
+},
+25: {
+	nextOnEnter: -1, nextOnSkip:-1,
+	show: (ctx, display) => { //;
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, " My shoes are fine. We just need to tread carefully.");
+		return btn;
+		},
+	getOptions: () => [25, 26],
+},
+26: {
+	nextOnEnter: 29, nextOnSkip:29,
+	show: (ctx, display) => { //;
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, " They're a bit worn, but ");
+		return btn;
+		},
+},
+27: {
+	nextOnEnter: 28, nextOnSkip:29,
+	show: (ctx, display) => { //;
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, " There could be others ahead.");
+		return btn;
+		},
+},
+28: {
+	nextOnEnter: 29, nextOnSkip:29,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-myra");
 		display.appendText(e, " Aye. There shall be.");
 		},
 },
-24: {
-	nextOnEnter: 25, nextOnSkip:25,
-	canEnter: (ctx) => (ctx.forget("affrighted")),
-},
-25: {
-	nextOnEnter: 26, nextOnSkip:26,
-	canEnter: (ctx) => (ctx.exit()),
-},
-26: {
-	nextOnEnter: 27, nextOnSkip:27,
-	show: (ctx, display) => { //;
-		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " Myra the chant-singer.");
-		},
-},
-27: {
-	nextOnEnter: 28, nextOnSkip:28,
-	show: (ctx, display) => { //;
-		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " Her face is more animal than human, changed by magic.");
-		},
-},
-28: {
-	nextOnEnter: 29, nextOnSkip:34,
-	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
-		display.appendText(e, " (It's disgusting.)");
-		},
-	canEnter: (ctx) => (ctx.skip()),
-	getOptions: () => [28, 32],
-},
 29: {
 	nextOnEnter: 30, nextOnSkip:30,
-	show: (ctx, display) => { //;
-		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " She and her cohorts live and die by ancient traditions and artifacts, but the human form seems not among those precious things.");
-		},
+	canEnter: (ctx) => (ctx.forget("affrighted")),
 },
 30: {
 	nextOnEnter: 31, nextOnSkip:31,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
-		display.appendText(e, " They're free to contort and ruin themselves for shallow utility and aesthetic, leaving their own species behind.");
+		display.appendText(e, " You walk. It grows darker still.");
 		},
 },
 31: {
-	nextOnEnter: 34, nextOnSkip:34,
+	nextOnEnter: 32, nextOnSkip:32,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " In the distance, you year what sounds like footsteps.");
+		},
+},
+32: {
+	nextOnEnter: 35, nextOnSkip:35,
+	show: (ctx, display) => { //;
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, "(Turn off the light.)");
+		return btn;
+		},
+	canEnter: (ctx) => (ctx.skip()),
+	getOptions: () => [32, 33],
+},
+33: {
+	nextOnEnter: 34, nextOnSkip:35,
+	show: (ctx, display) => { //;
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, "(Keep the light on.)");
+		return btn;
+		},
+	canEnter: (ctx) => (ctx.skip()),
+},
+34: {
+	nextOnEnter: 35, nextOnSkip:35,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " It seems like a bad idea.");
+		},
+},
+35: {
+	nextOnEnter: 36, nextOnSkip:36,
+	canEnter: (ctx) => (ctx.exit()),
+},
+36: {
+	nextOnEnter: 37, nextOnSkip:37,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " Myra the chant-singer. Your guide.");
+		},
+},
+37: {
+	nextOnEnter: 38, nextOnSkip:38,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " Her face is more animal than human, changed by magic.");
+		},
+},
+38: {
+	nextOnEnter: 39, nextOnSkip:39,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " She has enormous eyes. Like a bird, she has to turn her entire head to look around.");
+		},
+},
+39: {
+	nextOnEnter: 40, nextOnSkip:40,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " Her ears are large and pointed, flexing and twitching when she's attentive.");
+		},
+},
+40: {
+	nextOnEnter: 41, nextOnSkip:46,
+	show: (ctx, display) => { //;
+		var e = display.addReplyButton();var btn = e;
+		display.appendText(e, " (It's disgusting.)");
+		return btn;
+		},
+	canEnter: (ctx) => (ctx.skip()),
+	getOptions: () => [40, 44],
+},
+41: {
+	nextOnEnter: 42, nextOnSkip:42,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " She and her cohorts live and die by ancient traditions and knowledge, but the human form seems not among those precious things.");
+		},
+},
+42: {
+	nextOnEnter: 43, nextOnSkip:43,
+	show: (ctx, display) => { //;
+		var e = display.addMessage(); e.classList.add('dia-narration');
+		display.appendText(e, " They're free to contort and ruin themselves for shallow utility and aesthetic, leaving their own species behind.");
+		},
+},
+43: {
+	nextOnEnter: 46, nextOnSkip:46,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
 		display.appendText(e, " Hypocrites. The ugliness of their meddling is the burden they deserve.");
 		},
 },
-32: {
-	nextOnEnter: 33, nextOnSkip:34,
+44: {
+	nextOnEnter: 45, nextOnSkip:46,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
+		var e = display.addReplyButton();var btn = e;
 		display.appendText(e, " (It's beautiful.)");
+		return btn;
 		},
 	canEnter: (ctx) => (ctx.skip()),
 },
-33: {
-	nextOnEnter: 34, nextOnSkip:34,
+45: {
+	nextOnEnter: 46, nextOnSkip:46,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-narration');
 		display.appendText(e, " She's sculpted herself into what she wants to be. Isn't that what we all want?");
 		},
 },
-34: {
-	nextOnEnter: 35, nextOnSkip:35,
+46: {
+	nextOnEnter: 47, nextOnSkip:47,
 	canEnter: (ctx) => (ctx.back()),
 },
-35: {
-	nextOnEnter: 36, nextOnSkip:36,
+47: {
+	nextOnEnter: 48, nextOnSkip:48,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-you");
 		display.appendText(e, " “Affrighted?”");
 		},
 },
-36: {
-	nextOnEnter: 37, nextOnSkip:37,
+48: {
+	nextOnEnter: 49, nextOnSkip:49,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-myra");
 		display.appendText(e, " Thou dost refute the charge?");
 		},
 },
-37: {
-	nextOnEnter: 38, nextOnSkip:41,
+49: {
+	nextOnEnter: 50, nextOnSkip:53,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
+		var e = display.addReplyButton();var btn = e;
 		display.appendText(e, " I'm just confused by your phrasing. It's hard to understand what you're saying, at times.");
+		return btn;
 		},
-	getOptions: () => [37, 39],
+	getOptions: () => [49, 51],
 },
-38: {
-	nextOnEnter: 41, nextOnSkip:41,
+50: {
+	nextOnEnter: 53, nextOnSkip:53,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-myra");
@@ -295,49 +398,52 @@ dc_int_dialog: {
 		display.appendText(e, ". Those deaf to it are force to relearn, again and again, and lose yet more of their memory.");
 		},
 },
-39: {
-	nextOnEnter: 40, nextOnSkip:41,
+51: {
+	nextOnEnter: 52, nextOnSkip:53,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
+		var e = display.addReplyButton();var btn = e;
 		display.appendText(e, " I do.");
+		return btn;
 		},
 },
-40: {
-	nextOnEnter: 41, nextOnSkip:41,
+52: {
+	nextOnEnter: 53, nextOnSkip:53,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-myra");
 		display.appendText(e, " Then perhaps thou shouldst walk faster.");
 		},
 },
-41: {
-	nextOnEnter: 42, nextOnSkip:42,
+53: {
+	nextOnEnter: 54, nextOnSkip:54,
 	canEnter: (ctx) => (ctx.back()),
 },
-42: {
-	nextOnEnter: 43, nextOnSkip:45,
+54: {
+	nextOnEnter: 55, nextOnSkip:57,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
+		var e = display.addReplyButton();var btn = e;
 		display.appendText(e, " What are the ancient chants? Who sang them?");
+		return btn;
 		},
-	getOptions: () => [42, 44],
+	getOptions: () => [54, 56],
 },
-43: {
-	nextOnEnter: 45, nextOnSkip:45,
+55: {
+	nextOnEnter: 57, nextOnSkip:57,
 	show: (ctx, display) => { //;
 		var e = display.addMessage(); e.classList.add('dia-message');
 		e.classList.add("speaker-myra");
 		display.appendText(e, " ");
 		},
 },
-44: {
-	nextOnEnter: 45, nextOnSkip:45,
+56: {
+	nextOnEnter: 57, nextOnSkip:57,
 	show: (ctx, display) => { //;
-		var e = display.addReplyButton();
+		var e = display.addReplyButton();var btn = e;
 		display.appendText(e, " How do you hear these songs?");
+		return btn;
 		},
 },
-45: {
+57: {
 	nextOnEnter: -1, nextOnSkip:-1,
 	canEnter: (ctx) => (ctx.back()),
 },

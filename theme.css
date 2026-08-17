@@ -5,9 +5,54 @@ body {
 	font-size: 1.2rem;
 }
 
+h1 {
+	width: 100%;
+	text-align: center;
+}
+
 .dia-narration {
 	font-style: italic;
 	color: #CCC;
+}
+
+#controls {
+	position:sticky;
+	bottom: 0;
+}
+#messages {
+	padding-bottom: 20pt;
+}
+
+.button {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	width: 100%;
+	color: #fec;
+	border-style: solid;
+	border-color:#000;
+	background-color:#000;
+	font-family: serif;
+	font-size: 1.2rem;
+	border-width: 1pt;
+	transition-duration: 0.2s;
+}
+
+.button:hover {
+	border-style: solid;
+	border-color: #fec;
+	border-width: 1pt;
+}
+
+a {
+	color:#FB2;
+	font-style: bold;
+	text-decoration: underline;
+	transition-duration: 0.8s;
+}
+
+a.disabled {
+	color: #AAF;
+	pointer-events: none;
 }
 
 .speaker-angel {
@@ -19,8 +64,7 @@ body {
 	color: #ABF;
 }
 
-a {
-	color:#FB2;
+.speaker-you {
 	font-style: bold;
-	text-decoration: underline;
+	color: #E8A28D;
 }

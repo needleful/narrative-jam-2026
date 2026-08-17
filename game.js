@@ -6,11 +6,15 @@ import {dialog00_intro} from '/compiled/00_intro.js';
 var btnPlay = document.getElementById('btn-play');
 var btnNext = document.getElementById('btn-next');
 var elemMsgList = document.getElementById('messages');
-var elemReplyList = document.getElementById('messages');
+var elemReplyList = document.getElementById('replies');
 
 var display = {
 	addMessage: () => DialogView.addChild(elemMsgList),
-	addReplyButton: () => DialogView.addChild(elemReplyList, '', 'button'),
+	addReplyButton: () => {
+		var r = DialogView.addChild(elemReplyList, '', 'button');
+		r.classList.add('button');
+		return r;
+	},
 	addChild: DialogView.addChild,
 	appendText: DialogView.appendText,
 	appendTextOrElement: DialogView.appendTextOrElement,
@@ -21,47 +25,164 @@ function diaGet(intId) {
 	return seqCurrent.dc_int_dialog[intId];
 }
 
+var stack = [];
+// A list of HTML elements for each topic
+var context = {};
 var intCurrent = 0;
 function reset() {
 	intCurrent = 0;
+	stack = [];
+	context = {};
 }
 
 var ctx = {
 	exit: () => {
-		console.log('Exiting...')
-		return true;
+		return {goto: -1};
 	},
 	forget: (topic) => {
-		console.log('forgetting', topic);
-		return true;
+		if(topic in context) {
+			var a_elemLinks = context[topic];
+			for(var i = 0; i < a_elemLinks.length; i++) {
+				var elemLink = a_elemLinks[i];
+				elemLink.classList.add('disabled');
+			}
+			delete context[topic];
+			return true;
+		}
+		else {
+			return false;
+		}
 	},
-	skip: () => true,
-	back: () => true,
+	skip: () => {return {skip: true}},
+	goto: (strLabel) => {
+		if(strLabel in seqCurrent.dc_str_labels) {
+			var intNext = seqCurrent.dc_str_labels[strLabel];
+			return {goto: intNext};
+		}
+		else {
+			console.error('No such label: ', strLabel);
+			return false;
+		}
+	},
+	enter: (strLabel) => {
+		stack.push(intCurrent);
+		return ctx.goto(strLabel);
+	},
+	back: () => {
+		var intPrev = stack.pop();
+		var intNext = diaGet(intPrev).nextOnEnter;
+		return {goto: intNext};
+	},
 	scene: (image) => {
 		console.log('Setting scene to ', image);
 		return true;
 	},
-	explore(strText, labelTopic) {
-		if(!labelTopic) {
-			labelTopic = strText;
+	explore: (strText, strLabel) => {
+		if(!strLabel) {
+			strLabel = strText;
 		}
+		ctx.mention(strLabel);
 		var link = document.createElement('a');
-		link.href = '#'+labelTopic;
+		context[strLabel].push(link);
+		link.href = '#'+strLabel;
 		link.innerText = strText;
+		link.addEventListener('click', () => {
+			// Can't do this now.
+			if(btnNext.hidden || !ctx.mentioned(strLabel)) {
+				return;
+			}
+			var r = ctx.enter(strLabel);
+			intCurrent = r.goto;
+			advance();
+		});
 		return link;
+	},
+	mention: (strTopic) => {
+		context[strTopic] = [];
+		return true;
+	},
+	mentioned: (strTopic) => {
+		return strTopic in context;
 	}
 };
 
+function canEnter(diaItem) {
+	if('canEnter' in diaItem) {
+		return diaItem.canEnter(ctx);
+	}
+	return true;
+}
+
+function addMessage(strText, strClass) {
+	var msg = display.addMessage();
+	if(strClass) {
+		msg.classList.add(strClass);
+	}
+	DialogView.appendText(msg, strText);
+}
+
+function listReplies(diaItem) {
+	elemReplyList.innerText = '';
+	elemReplyList.hidden = false;
+	var intShown = 0;
+	var a_intReplies = diaItem.getOptions();
+	for(let i = 0; i < a_intReplies.length; i++) {
+		var diaReply = diaGet(a_intReplies[i]);
+		let next = diaReply.nextOnEnter;
+		var r = canEnter(diaReply);
+		if(!r) {
+			continue;
+		}
+		let skip = false;
+		if(typeof(r) === 'object') {
+			if('skip' in r) {
+				skip = r.skip;
+			}
+		}
+		let btn = diaReply.show(ctx, display);
+		btn.addEventListener('click', () => {
+			if(!skip) {
+				var msg = display.addMessage();
+				msg.classList.add('speaker-you');
+				msg.innerHTML = btn.innerHTML;
+			}
+			intCurrent = next;
+			advance();
+		});
+		intShown ++;
+	}
+	return intShown > 0;
+}
+
 function advance() {
+	elemReplyList.hidden = true;
 	var result = false;
 	while(!result) {
 		var diaItem = diaGet(intCurrent);
-		if('canEnter' in diaItem) {
-			var r = diaItem.canEnter(ctx);
-			if(!r) {
+		if(!diaItem) {
+			break;
+		}
+		if('getOptions' in diaItem) {
+			// Message is done.
+			if(listReplies(diaItem)) {
+				btnNext.hidden = true;
+				return;
+			}
+			else {
 				intCurrent = diaItem.nextOnSkip;
 				continue;
 			}
+		}
+		var r = canEnter(diaItem);
+		if(!r) {
+			intCurrent = diaItem.nextOnSkip;
+			continue;
+		}
+		else if(typeof(r) == 'object') {
+			if('goto' in r) {
+				intCurrent = r.goto;
+			}
+			continue;
 		}
 		if(!('show' in diaItem)) {
 			intCurrent = diaItem.nextOnEnter;
@@ -70,13 +191,13 @@ function advance() {
 		result = true;
 	}
 	if(intCurrent == -1) {
-		var msg = display.addMessage();
-		DisplayView.appendText(msg, 'Dialog Ended.');
+		addMessage('The End.')
 		seqCurrent = null;
 	}
 	else {
 		diaGet(intCurrent).show(ctx, display);
 		btnNext.hidden = false;
+		elemMsgList.scrollTo(0, elemMsgList.scrollHeight + 100);
 	}
 }
 
@@ -88,12 +209,15 @@ function start(seqDialog) {
 }
 
 function next() {
+	if(intCurrent < 0) {
+		return;
+	}
 	intCurrent = diaGet(intCurrent).nextOnEnter;
 	advance();
 }
 
-document.addEventListener('keypress', () => {
-	if(event.key == ' ' && seqCurrent) {
+document.addEventListener('keydown', () => {
+	if(event.key == ' ' && seqCurrent && !btnNext.hidden) {
 		next();
 	}
 });
