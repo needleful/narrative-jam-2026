@@ -1,0 +1,26 @@
+body {
+	background-color: #000;
+	color: #DDD;
+	font-family: serif;
+	font-size: 1.2rem;
+}
+
+.dia-narration {
+	font-style: italic;
+	color: #CCC;
+}
+
+.speaker-angel {
+	font-size: 3rem;
+	font-variant: small-caps;
+}
+
+.speaker-myra {
+	color: #ABF;
+}
+
+a {
+	color:#FB2;
+	font-style: bold;
+	text-decoration: underline;
+}

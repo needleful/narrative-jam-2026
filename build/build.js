@@ -5,16 +5,7 @@ const name = 'wax_gloves_build';
 const content = document.getElementById('game-content');
 const download = document.getElementById('link-download');
 
-const codePreamble = `
-import * as Dialog from '/dialog/compiler.js';
-import * as DialogView from '/dialog/display.js';
-
-const datxt = DialogView.appendText;
-const dach = DialogView.addChild;
-
-const always = (ctx) => true;
-
-`;
+const codePreamble = '//AUTOMATICALLY GENERATED\n';
 
 async function compile(strPath, out) {
 	DialogView.addChild(content, strPath, 'h2');
@@ -26,7 +17,7 @@ async function compile(strPath, out) {
 	var strText = await response.text();
 	var seqDialog = Dialog.compile(strText.replaceAll('\r', ''));
 	var elemJS = document.createElement('pre');
-	var strCode = codePreamble + Dialog.toJS(seqDialog, 'const '+ out)
+	var strCode = codePreamble + `export const name = "${out}";\n` + Dialog.toJS(seqDialog, 'export const '+ out)
 	elemJS.innerText = strCode;
 	content.appendChild(elemJS);
 	return strCode;
