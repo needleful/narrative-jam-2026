@@ -199,7 +199,7 @@ dc_int_dialog: {
 		},
 	},
 	23: {
-		nextOnEnter: -1, nextOnSkip: -1,
+		nextOnEnter: -1, nextOnSkip: 27,
 		options: [23, 24, ],
 		show: (ctx, display) => {
 			var e = display.addReplyButton();
@@ -211,7 +211,7 @@ dc_int_dialog: {
 		nextOnEnter: 27, nextOnSkip: 27,
 		show: (ctx, display) => {
 			var e = display.addReplyButton();
-			display.appendText(e, "They're a bit worn, but ");
+			display.appendText(e, "They are a bit worn...");
 			return e;
 		},
 	},
@@ -473,7 +473,7 @@ dc_int_dialog: {
 		},
 	},
 	58: {
-		nextOnEnter: 59, nextOnSkip: 60,
+		nextOnEnter: 59, nextOnSkip: -1,
 		show: (ctx, display) => {
 			var e = display.addMessage("myra");
 			display.appendText(e, "Thou canst hear it same as I, but thy mind does not notice it, mistaken for the noise of the air.");
