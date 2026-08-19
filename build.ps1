@@ -1,0 +1,1 @@
+.\dialog\compiler\np-dialog-compiler.exe .\build\00_intro.dialog .\compiled\dialog00_intro.js dialog00_intro
