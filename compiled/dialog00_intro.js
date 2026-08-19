@@ -207,7 +207,7 @@ dc_int_dialog: {
 		runEffects: (ctx) => [
 			(ctx.skip())
 		],
-		show: (ctx, display) => display.addReplyButton(" (It's disgusting.)"),
+		show: (ctx, display) => display.addReplyButton("(It's disgusting.)"),
 	},
 	42: {
 		nextOnEnter: 43, nextOnSkip: 43,
@@ -226,7 +226,7 @@ dc_int_dialog: {
 		runEffects: (ctx) => [
 			(ctx.skip())
 		],
-		show: (ctx, display) => display.addReplyButton(" (It's beautiful.)"),
+		show: (ctx, display) => display.addReplyButton("(It's beautiful.)"),
 	},
 	46: {
 		nextOnEnter: 47, nextOnSkip: 47,
