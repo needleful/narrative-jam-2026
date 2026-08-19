@@ -9,23 +9,32 @@ var elemMsgList = document.getElementById('messages');
 var elemReplyList = document.getElementById('replies');
 
 var display = {
-	addMessage: (speaker) => {
+	addMessage: (speaker, text) => {
 		var e = DialogView.addChild(elemMsgList);
 		e.classList.add('dia-message');
 
 		if(speaker){
 			e.classList.add('speaker-'+speaker);
 		}
+		if(text) {
+			e.innerText = text;
+		}
 		return e;
 	},
-	addNarration: () => {
+	addNarration: (text) => {
 		var e = DialogView.addChild(elemMsgList);
 		e.classList.add('dia-narration');
+		if(text) {
+			e.innerText = text;
+		}
 		return e;
 	},
-	addReplyButton: () => {
+	addReplyButton: (text) => {
 		var r = DialogView.addChild(elemReplyList, '', 'button');
 		r.classList.add('button');
+		if(text) {
+			r.innerText = text;
+		}
 		return r;
 	},
 	addChild: DialogView.addChild,
@@ -149,11 +158,10 @@ function getEffects(diaItem) {
 }
 
 function addMessage(strText, strClass) {
-	var msg = display.addMessage();
+	var msg = display.addMessage('', strText);
 	if(strClass) {
 		msg.classList.add(strClass);
 	}
-	DialogView.appendText(msg, strText);
 }
 
 function listReplies(diaItem) {
